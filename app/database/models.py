@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date
 from datetime import date
-from app.database.database import Base
+from database.database import Base
 
 
 class Internship(Base):
