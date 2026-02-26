@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from database.database import SessionLocal
-from scraper.internshala_scraper import scrape_internshala
+from app.database.database import SessionLocal
+from app.scraper.internshala import scrape_internshala
 
 router = APIRouter(prefix="/internships", tags=["Internships"])
 
 
+# Dependency to get DB session
 def get_db():
     db = SessionLocal()
     try:
@@ -15,6 +16,9 @@ def get_db():
 
 
 @router.post("/scrape")
-async def manual_scrape(keyword: str, db: Session = Depends(get_db)):
-    count = await scrape_internshala(keyword, db)
-    return {"new_saved": count}
+async def run_scraper(db: Session = Depends(get_db)):
+    total = await scrape_internshala(db)
+    return {
+        "message": "Scraping completed",
+        "total_saved": total
+    }
