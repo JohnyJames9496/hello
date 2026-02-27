@@ -25,7 +25,7 @@ DEFAULT_KEYWORDS = [
     "python",
     "java",
     "ai",
-    "web development",
+    "web",
     "data science",
     "machine learning",
     "backend",
@@ -124,6 +124,7 @@ async def scrape_internshala(db: Session, limit: int = 8):
                     # Company
                     company_el = await card.query_selector(".company_name")
                     company = await company_el.inner_text() if company_el else "Unknown"
+                    company = company.replace("Actively Hiring", "").strip()
 
                     # Full card text
                     full_text = await card.inner_text()
