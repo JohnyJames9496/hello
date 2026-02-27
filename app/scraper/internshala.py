@@ -123,7 +123,8 @@ async def scrape_internshala(db: Session, limit: int = 8):
 
                     # Company
                     # Company (strict extraction)
-                    company_el = await card.query_selector(".company_name a")
+                    # Company (precise extraction)
+                    company_el = await card.query_selector("p.company-name")
                     company = await company_el.inner_text() if company_el else "Unknown"
                     company = company.strip()
 
