@@ -152,16 +152,17 @@ async def scrape_internshala(db: Session, limit: int = 8):
                     location = await location_el.inner_text() if location_el else "Remote"
 
                     # Skills
-                    skills_el = await card.query_selector(".job_skills")
-                    skills = "N/A"
+                    # Skills (clean extraction)
+                    skill_elements = await card.query_selector_all(".job_skills .skill_container")
 
-                    if skills_el:
-                        raw_skills = await skills_el.inner_text()
-                        skills = ", ".join([
-                            s.strip()
-                            for s in raw_skills.replace("\n", ",").split(',')
-                            if s.strip()
-                        ])
+                    skill_list = []
+
+                    for el in skill_elements:
+                         text = await el.inner_text()
+                         if text.strip():
+                          skill_list.append(text.strip())
+
+                    skills = ", ".join(skill_list) if skill_list else "N/A"
 
                     job_data = {
                         "title": title.strip(),
