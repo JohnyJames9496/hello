@@ -3,4 +3,5 @@ uvicorn
 sqlalchemy
 psycopg2-binary
 patchright
+playwright
 python-dotenv
