@@ -4,7 +4,7 @@ from app.database.database import Base
 
 
 class Internship(Base):
-    __tablename__ = "internships_new"
+    __tablename__ = "internships"
 
     id = Column(Integer, primary_key=True, index=True)
 
